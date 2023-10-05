@@ -1,247 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>스파르타플릭스</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
-
-    * {
-        font-family: 'Cute Font', cursive;
-    }
-
-    .mycontainer {
-        color: white;
-
-        background-image: url('https://occ-0-1123-1217.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABeIfo7VL_VDyKnljV66IkR-4XLb6xpZqhpLSo3JUtbivnEW4s60PD27muH1mdaANM_8rGpgbm6L2oDgA_iELHZLZ2IQjG5lvp5d2.jpg?r=e6e.jpg');
-        background-position: center;
-        background-size: cover;
-
-    }
-
-    body {
-        background-color: black;
-    }
-
-    .mycards {
-        width: 1200px;
-        margin: 20px auto 20px auto;
-
-    }
-
-    .mypostingbox {
-        width: 500px;
-        margin: 20px auto 20px auto;
-
-        border: 1px solid white;
-        padding: 20px;
-        border-radius: 5px;
-    }
-
-    .form-floating>input {
-        background-color: transparent;
-        color: white;
-    }
-
-    .form-floating>label {
-        color: white;
-    }
-
-    .input-group>label {
-        background-color: transparent;
-        color: white;
-    }
-
-    .mypostingbox>button {
-        width: 100%;
-    }
-</style>
-<script type="module">
-    // Firebase SDK 라이브러리 가져오기
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 팀원 소개</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
 
 
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyAuly6EHnRUrlOMKGewoa5NCS1-Vr77aVk",
-        authDomain: "sparta-f5614.firebaseapp.com",
-        projectId: "sparta-f5614",
-        storageBucket: "sparta-f5614.appspot.com",
-        messagingSenderId: "228574733083",
-        appId: "1:228574733083:web:bef51dfdc210b612de29be",
-        measurementId: "G-58CL3QYVKV"
-    };
 
-    // Firebase 인스턴스 초기화
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    $("#postingbtn").click(async function () {
-        let image = $('#image').val();
-        let title = $('#title').val();
-        let star = $('#star').val();
-        let comment = $('#comment').val();
 
-        let doc = {
-            'image': image,
-            'title': title,
-            'star': star,
-            'comment': comment
 
-        };
-        await addDoc(collection(db, "movies"), doc);
-        alert('저장완료!');
-        // 새로고침 구문
-        window.location.reload();
-    })
-
-    $("#savebtn").click(async function () {
-        $('#postingbox').toggle();
-    })
-
-    let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
-    fetch(url).then(res => res.json()).then(data => {
-        let temp = data['temp']
-        if (temp < 20) {
-            let html = `<a>추워요<a>`;
-            $('#Test').append(html);
-        }
-        else {
-            let html = `<a>더워요<a>`
-            $('#Test').append(html);
+    <style>
+        .btn-btn-primary {
+            background-color: rgba(71, 129, 255, 0.445);
+            width: 100px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            margin-left: 95%;
+            text-align: center;
+            justify-content: center;
         }
 
-    })
-    let docs = await getDocs(collection(db, "movies"));
-    docs.forEach((doc) => {
-        let row = doc.data();
+        .modal-title {
+            color: #000000;
 
-        let images = row['image'];
-        let title = row['title'];
-        let star = row['star'];
-        let conmment = row['comment'];
+        }
 
+        .col-form-label {
+            color: #000000;
+        }
 
-        let temp_html = `            
-        <div class="col">
-                <div class="card">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${title}</h5>
-                        <p class="card-text">${star}</p>
-                        <p class="card-text">${comment}</p>
-                    </div>
-                </div>
-            </div>`;
-        $('#card').append(temp_html);
+        .button {
+            background-color: rgba(71, 129, 255, 0.445);
+            width: 100px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            margin-left: 95%;
+            text-align: center;
+            justify-content: center;
 
-    });
+        }
 
-    
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            vertical-align: middle;
+        }
 
+        h1 {
+            font-size: 30px;
+        }
 
+        .team-member {
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px;
+            max-width: 300px;
+            width: 100%;
+            background-color: #333;
+        }
 
-</script>
+        .team-member img {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        .team-member h3 {
+            margin-top: 10px;
+        }
+
+        .team-members {
+            display: flex;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0px auto;
+        }
+    </style>
+
+    <script type="module">
+        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { db, storage } from "./js/db.js";
+        import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+
+        $("#btn").click(async function () {
+            let position = $('#position').val();
+            let name = $('#name').val();
+            let imageUrl = $('#imageUrl').val();
+            let info_mbti = $('#info_mbti').val();
+            let advantage = $('#advantage').val();
+            let codingStyle = $('#codingStyle').val();
+            let teamFeature_Goal = $('#teamFeature_Goal').val();
+            let teamPromise = $('#teamPromise').val();
+            let blogUrl = $('#blogUrl').val();
+            let file = document.querySelector('#imageUrl').files[0];
+
+            let data = {
+                position: position,
+                name: name,
+                imageUrl: file.name,
+                info_mbti: info_mbti,
+                advantage: advantage,
+                codingStyle: codingStyle,
+                teamFeature_Goal: teamFeature_Goal,
+                teamPromise: teamPromise,
+                blogUrl: blogUrl
+            };
+
+            await addDoc(collection(db, "members"), data);
+
+            const storageRef = ref(storage, file.name);
+
+            uploadBytes(storageRef, file).then((snapshot) => {
+                alert('저장 완료!');
+                window.location.reload();
+            });
+        });
+
+        let docs = await getDocs(collection(db, "members"));
+
+        docs.forEach((doc) => {
+            let row = doc.data();
+            console.log(row);
+
+            let id = doc.id;
+            let imageUrl = row["imageUrl"];
+            let position = row["position"];
+            let name = row["name"];
+
+            getDownloadURL(ref(storage, imageUrl))
+                .then((url) => {
+                    let html = `
+                        <div class="team-member">
+                            <a href="intro.html?id=${id}">
+                                <img src=${url} alt=${position}>
+                            </a>
+                            <h3>${name}</h3>
+                            <p>${position}</p>
+                        </div>
+                    `;
+
+                    $('#wrapper').append(html);
+                })
+        });
+    </script>
 
 </head>
 
 <body>
 
-    <header class="p-3 text-bg-dark">
-        <div class="containers">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
+    <button type="button" id="button" class="btn-btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo">추가
+    </button>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-danger">스파르타플릭스</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">내가 찜한 컨텐츠</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">오늘 서울의 온도 <span id="Test"> </span> 입니다</a></li>
-                </ul>
-
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-                        aria-label="Search">
-                </form>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-danger">Sign-up</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">팀원 신청서</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">이름</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">역할</label>
+                            <input type="text" class="form-control" id="position">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">사진 파일</label>
+                            <input type="file" class="form-control" id="imageUrl">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">[팀]과 [자신]에 대한 설명 및 MBTI</label>
+                            <input type="text" class="form-control" id="info_mbti">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">객관적으로 살펴본 자신의 장점</label>
+                            <textarea class="form-control" id="advantage"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">자신의 스타일 협업 스타일 소개</label>
+                            <textarea class="form-control" id="codingStyle"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">우리 팀만의 특징과 추구하는 궁극적인 목표</label>
+                            <textarea class="form-control" id="teamFeature_Goal"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">우리 팀의 약속</label>
+                            <textarea class="form-control" id="teamPromise"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">팀원들의 블로그 주소</label>
+                            <input type="text" class="form-control" id="blogUrl">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="btn" type="button" class="btn btn-primary">저장</button>
                 </div>
             </div>
         </div>
-    </header>
-    <div class="mycontainer">
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">킹덤</h1>
-                <p class="col-md-8 fs-4">왕을 둘러싸고 흉흉한 소문이 떠돈다...</p>
-                <button id="savebtn" type="button" class="btn btn-outline-light">영화 기록하기</button>
-                <button type="button" class="btn btn-outline-light">상세정보</button>
-            </div>
-        </div>
-
-    </div>
-    <div class="mypostingbox" id="postingbox">
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="image" placeholder="name@example.com">
-            <label for="floatingInput">영화 이미지 주소</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="title" placeholder="name@example.com">
-            <label for="floatingInput">영화 제목</label>
-        </div>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">별점</label>
-            <select class="form-select" id="star">
-                <option selected>별점선택</option>
-                <option value="⭐">⭐</option>
-                <option value="⭐⭐">⭐⭐</option>
-                <option value="⭐⭐⭐">⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
-            </select>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="comment" placeholder="name@example.com">
-            <label for="floatingInput">영화 추천 이유</label>
-        </div>
-        <button id="postingbtn" type="button" class="btn btn-danger">기록하기</button>
     </div>
 
 
-    <div class="mycards">
-        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-
-                <div class="card">
-                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">영화제목</h5>
-                        <p class="card-text">⭐⭐⭐</p>
-                        <p class="card-text">영화코멘트</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <!-- Modal -->
+    <div class="container">
+        <h1>봄장어 팀의 잇츠미 프로젝트</h1>
     </div>
 
+    <div id="wrapper" class="team-members container">
+        <!-- <div class="team-member">
+            <a href="intro.html?id=ljr"><img src="https://ifh.cc/g/KrmSOz.jpg" alt="팀원 1"></a>
+            <h3>배규태</h3>
+            <p>팀장</p>
+        </div> -->
 
+        <!-- <div class="team-member">
+            <img src="https://i.ibb.co/V33j4zv/Untitled.jpg" alt="Untitled" style="border: 0"></a>
+            <h3>이종렬</h3>
+            <p>팀원1</p>
+        </div>
+
+        <div class="team-member">
+            <img src="https://i.ibb.co/pdwzRJr/Kakao-Talk-20230828-164456866.jpg" alt="Kakao-Talk-20230828-164456866"></a>
+            <h3>고도윤</h3>
+            <p>팀원2</p>
+        </div>
+
+        <div class="team-member">
+            <img src="https://i.ibb.co/w7YZy38/image.jpg" alt="image" style="border: 0"></a>
+
+            <h3>박창선</h3>
+            <p>팀원3</p>
+        </div> -->
     </div>
 
 </body>
